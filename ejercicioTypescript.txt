@@ -1,0 +1,330 @@
+direccion.ts
+***********
+export class Direccion{
+
+    private calle: string;
+    private numero: number;
+    private piso: number;
+    private letra: string;
+    private codigo_Postal: number;
+    private poblacion: string;
+    private provincia: string;
+   
+    constructor( a:string, b:number, c:number, d:string, e:number, f:string, g:string){
+        this.calle = a;
+        this.numero = b;
+        this.piso = c;
+        this.letra = d;
+        this.codigo_Postal = e;
+        this.poblacion = f;
+        this.provincia = g;    
+    }
+
+
+    public getcalle(): string {
+        return this.calle;
+    }
+    public setcalle(value: string) {
+        this.calle = value;
+    }
+
+
+    public getNumeroCalle(): number {
+        return this.numero;
+    }
+    public setNumeroCalle(value: number) {
+        this.numero = value;
+    }
+
+  
+    public getPiso(): number {
+        return this.piso;
+    }
+    public setPiso(value: number) {
+        this.piso = value;
+    }
+
+    public getLetra(): string {
+        return this.letra;
+    }
+    public setLetra(value: string) {
+        this.letra = value;
+    }
+
+
+    public getCodigoPostal(): number {
+        return this.codigo_Postal;
+    }
+    public setCodigoPostal(value: number) {
+        this.codigo_Postal = value;
+    }
+
+
+    public getPoblacion(): string {
+        return this.poblacion;
+    }
+    public setPoblacion(value: string) {
+        this.poblacion = value;
+    }
+
+
+    public getProvincia(): string {
+        return this.provincia;
+    }
+    public setProvincia(value: string) {
+        this.provincia = value;
+    }
+
+
+}    
+
++++++++++++++++++++++++++++++++++
+
+emails.ts
+***************************
+export class Email {
+
+    private tipo: string;
+    private direccion: string;
+    
+   
+    constructor( a:string, b:string){
+        this.tipo = a;
+        this.direccion = b;
+        
+    }
+
+    public getTipoEmail(): string {
+        return this.tipo;
+    }
+    public setTipoEmail(value: string) {
+        this.tipo = value;
+    }
+
+    public getDireccionEmail(): string {
+        return this.direccion;
+    }
+    public setDireccionEmail(value: string) {
+        this.direccion = value;
+    }
+
+
+}
+
++++++++++++++++++++++++++++++
+
+telefono.ts
+*********************************+
+
+export class Telefono{
+
+    private tipo: string;
+    private numero: number;
+    
+   
+    constructor( a:string, b:number){
+        this.tipo = a;
+        this.numero = b;
+        
+    }
+
+    public getTipoTelefono(): string {
+        return this.tipo;
+    }
+    public setTipoTelefono(value: string) {
+        this.tipo = value;
+    }
+
+    public getNumeroTelefono(): number {
+        return this.numero;
+    }
+    public setNumeroTelefono(value: number) {
+        this.numero = value;
+    }
+ 
+}
+
+***********************+++++++
+main.ts
+*************************++++++
+
+import { Direccion } from "./direccion";
+import { Persona } from "./persona";
+import { Email } from "./email";
+import { Telefono } from "./telefono";
+
+
+
+console.log ('***********************Iniciamos ejecución del programa ************************');
+
+let registro1=new Persona ("Hugo", "Perez Ramirez", 43, "12345678A", new Date("2020-01-30"), "Violeta", "Hombre",[new Direccion ("Salsipuedes", 2, 5,"A",28034,"Madrid", "Madrid")], [new Email("oficina","hugoPe@gmail.com",)], [new Telefono("oficina", 654231454)], "Alérgico a la penicilina")
+let registro2=new Persona ("Paco", "Paredes Delgado", 32, "87654321Z", new Date("1976-04-19"), "Rosado", "Hombre", [new Direccion ("Alegría de la Huerta", 43, 3, "B", 28054, "Madrid", "Madrid")],[new Email("particular", "paquito18delgado@hotmail.com")], [new Telefono('particular', 642678756)], "Sufre mareos constantes")
+let registro3=new Persona ("Luis", "Valdez Torres", 75, "45632781B", new Date("1999-12-15"),"Morado", "Hombre", [new Direccion ("Me falta un tornillo", 25, 2, "C", 28028, "Madrid", "Madrid")],[new Email("trabajo", "luis_val@gmail.com")], [new Telefono('trabajo', 643764563)], "Alérgico al polen")
+
+
+let perRegistrada =[registro1, registro2, registro3]
+for (const persona of perRegistrada) {
+    console.log ('***********************Inicio del Registro ************************');
+    console.log(persona + '\n');    
+    console.log ('***********************Fin del Registro ************************');
+    
+}
+
+
+// Modificación de un registro de Persona
+console.log ('***********************Modificando Registro ************************')
+
+for (const persona of perRegistrada) {
+    
+    let DNI= persona.getDNI()
+    let direccion= persona.getDireccion()
+    let email=persona.getMail()
+    let telefono= persona.getTelefono()
+        if( DNI === "12345678A"){
+
+            direccion.push(new Direccion("Verbena de la Paloma", 24, 7, "D", 28023, "Madrid", "Madrid"));
+            email.push (new Email ("personal", "HugoPerez@hotmail.com"));
+            telefono.push(new Telefono("personal", 654634565));
+            console.log(persona.imprimir());
+    }
+}   
+
+console.log ('***********************Fin Modificando Registro ************************')
+
+// Consoleamos el array nuevo
+for (const persona of perRegistrada) {
+    console.log ('***********************Inicio Nuevo del Registro ************************');
+    console.log(persona + '\n');    
+    console.log ('***********************Fin Nuevo del Registro ************************');
+    
+}
+
+
+console.log ('----------- Finalizamos ejecución del programa --------------------');
+
+*****************************
+
+persona.ts
+
+
+import {Telefono} from "./telefono";
+import {Direccion} from "./direccion";
+import {Email} from "./email";
+
+
+
+export class Persona{
+
+    private nombre: string;
+    private apellidos: string;
+    private edad: number;
+    private DNI: string;
+    private cumpleanos: Date = new Date();
+    private color_Preferido: string;
+    private sexo: string;
+    private direccion: Direccion[]=[];
+    private mail: Email[]=[];
+    private telefono: Telefono[]=[];
+    private notas: string;
+
+              
+    constructor( a:string, b:string, c:number, d:string, e:Date, f:string, g:string, h:Array<Direccion>, i:Array<Email>, j:Array<Telefono>, k:string){
+        this.nombre = a;
+        this.apellidos = b;
+        this.edad = c;
+        this.DNI = d;
+        this.cumpleanos = e;
+        this.color_Preferido = f;
+        this.sexo = g;
+        this.direccion = h;
+        this.mail = i;
+        this.telefono = j;
+        this.notas = k;
+    }        
+
+
+    public getNombre(): string {
+        return this.nombre;
+    }
+    public setNombre(value: string) {
+        this.nombre = value;
+    }
+    
+    public getApellidos(): string {
+        return this.apellidos;
+    }
+    public setApellidos(value: string) {
+        this.apellidos = value;
+    }
+    
+    public getEdad(): number {
+        return this.edad;
+    }
+    public setEdad(value: number) {
+        this.edad = value;
+    }
+    
+    public getDNI(): string {
+        return this.DNI;
+    }
+    public setDNI(value: string) {
+        this.DNI = value;
+    }
+    
+    public getCumpleanos(): Date {
+        return this.cumpleanos;
+    }
+    public setCumpleanos(value: Date) {
+        this.cumpleanos = value;
+    }
+    
+    public getColor_Preferido(): string {
+        return this.color_Preferido;
+    }
+    public setColor_Preferido(value: string) {
+        this.color_Preferido = value;
+    }
+    
+    public getSexo(): string {
+        return this.sexo;
+    }
+    public setSexo(value: string) {
+        this.sexo = value;
+    }
+    
+    public getDireccion(): Array<Direccion> {
+        return this.direccion;
+    }
+    public setDireccion(value: Array<Direccion>) {
+        this.direccion = value;
+    }
+    
+    public getMail(): Array<Email> {
+        return this.mail;
+    }
+    public setMail(value: Array<Email>) {
+        this.mail = value;
+    }
+    
+    public getTelefono(): Array<Telefono> {
+        return this.telefono;
+    }
+    public setTelefono(value: Array<Telefono>) {
+        this.telefono = value;
+    }
+
+  
+    public getNotas(): string {
+        return this.notas;
+    }
+    public setNotas(value: string) {
+        this.notas = value;
+    }
+
+
+    public imprimir():string {
+        return JSON.stringify(this)
+      }
+
+}
+
